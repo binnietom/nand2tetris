@@ -14,6 +14,13 @@ Each level is planned to be an abstraction that relies on parts/objects from the
 
 ### Chapter 1 - Boolean Logic
 
+The functions in nand.py are similar to the HDL instructions used to create real chips.
+HDL is a declarative program that describes textual specifications for real chips (i.e. where transistors go on silicon).
+Gates can only be combined sequentially or in combination and all gates can be created from Nand.
+All the functions here can be built from nand gates, but using optimised parts for higher functions reduces parts and increases efficiency both in energy and time.
+
+### Chapter 2 - Boolean Arithmetic
+
 
 
 # CookieCutter..
