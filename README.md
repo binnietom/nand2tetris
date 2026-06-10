@@ -1,17 +1,5 @@
 # nand2tetris
 
-![PyPI version](https://img.shields.io/pypi/v/nand2tetris.svg)
-
-Python simulation of end to end working computer from first principles.
-
-* [GitHub](https://github.com/Tom Binnie/nand2tetris/) | [PyPI](https://pypi.org/project/nand2tetris/) | [Documentation](https://Tom Binnie.github.io/nand2tetris/)
-* Created by [Thomas Binnie](https://audrey.feldroy.com/) | GitHub [@binnietom](https://github.com/binnietom) | PyPI [@binnietom](https://pypi.org/user/binnietom/)
-* MIT License
-
-## Features
-
-# nand2tetris
-
 Simulated computer from first principles all in python. Based on "Elements of Computing Systems" Nisan and Schocken.
 
 Architecture is split into 2 layers:
@@ -25,6 +13,21 @@ Each level is planned to be an abstraction that relies on parts/objects from the
 ## Hardware
 
 ### Chapter 1 - Boolean Logic
+
+
+
+# CookieCutter.. 
+
+![PyPI version](https://img.shields.io/pypi/v/nand2tetris.svg)
+
+Python simulation of end to end working computer from first principles.
+
+* [GitHub](https://github.com/Tom Binnie/nand2tetris/) | [PyPI](https://pypi.org/project/nand2tetris/) | [Documentation](https://Tom Binnie.github.io/nand2tetris/)
+* Created by [Thomas Binnie](https://audrey.feldroy.com/) | GitHub [@binnietom](https://github.com/binnietom) | PyPI [@binnietom](https://pypi.org/user/binnietom/)
+* MIT License
+
+## Features
+
 
 ## Documentation
 
