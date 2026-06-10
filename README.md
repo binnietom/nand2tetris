@@ -30,7 +30,7 @@ All the functions here can be built from nand gates, but using optimised parts f
 Python simulation of end to end working computer from first principles.
 
 * [GitHub](https://github.com/Tom Binnie/nand2tetris/) | [PyPI](https://pypi.org/project/nand2tetris/) | [Documentation](https://Tom Binnie.github.io/nand2tetris/)
-* Created by [Thomas Binnie](https://audrey.feldroy.com/) | GitHub [@binnietom](https://github.com/binnietom) | PyPI [@binnietom](https://pypi.org/user/binnietom/)
+* Created by [Thomas Binnie] | GitHub [@binnietom](https://github.com/binnietom) | PyPI [@binnietom](https://pypi.org/user/binnietom/)
 * MIT License
 
 ## Features
