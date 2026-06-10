@@ -7,7 +7,7 @@ Nand is the lowest abstraction in nand to tetris - Takes two binary inputs and r
 0 + 1 -> 1
 
 An abastraction is logical behaviour without explanation.
-We express binary in 0,1 (rather than True False). 
+We express binary in 0,1 (rather than True False).
 
 Nand are the fundamental gates. You buy these and use a soldering gun to make nand, xor etc.
 
@@ -15,6 +15,29 @@ Nand are the fundamental gates. You buy these and use a soldering gun to make na
 Added the letter l where python has a predefind word for the gate name.
 
 """
+
+def check_bit(a):
+    """
+    Adding this to check my objects are bits
+    """
+    if isinstance(a, int):
+        if (a == 1 or a == 0): return True
+    return False
+
+def check_16bit(a):
+    check = False
+    if len(a) == 16:
+        check = True
+        for j, i in enumerate(a):
+            if check_bit(i):
+                continue
+            print(f"False bit on step {j}: ", i)
+            check = False
+    return check
+
+def nand(a,b):
+    if (a == 1 and b == 1): return 0
+    return 1
 
 def land(a,b):
     if (a == b and a == 1): return 1
@@ -34,10 +57,6 @@ def xor(a,b):
     """
     return lor(land(a, lnot(b)),land(lnot(a), b))
 
-def nand(a,b):
-    if (a == 1 and b == 1): return 0
-    return 1
-
 def mux(a,b,sel):
     """
     Short for multiplexer.
@@ -48,21 +67,124 @@ def mux(a,b,sel):
 
 def dmux(a,sel):
     """
-    Demulitplexer. returns 2 bits a and 0. The order is determined by sel. 
+    Demulitplexer. returns 2 bits a and 0. The order is determined by sel.
     """
     if sel == 0: return a, 0
     return 0, a
 
+##tested up to here.
+
+def multilnot(lin):
+    """
+    N bit implementation of not (lnot).
+    we'll use N = 16 later but its flexible here.
+    """
+    out = lin
+    for i, a in enumerate(lin):
+        out[i] = lnot(lin[i])
+    return out
+
+def multiland(ina, inb):
+    """
+    N bit implementation of and (land).
+    """
+    assert len(ina) == len(inb)
+    out = ina
+    for i, lin in enumerate(zip(ina, inb)):
+        out[i] = land(lin[0], lin[1])
+    return out
+
+def multilor(ina, inb):
+    """
+    N bit or (lor).
+    """
+    assert len(ina) == len(inb)
+    out = ina
+    for i, lin in enumerate(zip(ina, inb)):
+        out[i] = lor(lin[0], lin[1])
+    return out
+
+
+def multimux(a,b,sel):
+    """
+    Same as mux but with defined 2nd value, 1 bit selector
+    """
+    if sel == 0: return a, b
+    return b, a
+
+def mwaylor(ina):
+    """
+    Multi-way Or gate
+    outputs 1 when at least 1 of the inputs is 1, 0 otherwise.
+    #hardware typically needs 1 8mwaylor variant. We can leave it undetermined in python.
+
+    """
+    for i in ina:
+        if i == 1:
+             return 1
+    return 0
+
+
+def mux4way16(a,b,c,d,sel):
+    """
+    4 16 bit, numbers selected by a 2 bit selector.
+    00,01,10,11 = a,b,c,d
+    """
+    if (sel[0] == 0 and sel[1] == 0): return a
+    if (sel[0] == 0 and sel[1] == 1): return b
+    if (sel[0] == 1 and sel[1] == 0): return c
+    if (sel[0] == 1 and sel[1] == 1): return d
+
+def mux8way16(a,b,c,d,e,f,g,h,sel):
+    """
+    8 16 bit, numbers selected by a 3 bit selector.
+    000,001,010= a,b,c,d
+    4 2bit selectors.
+    """
+    x = [a,b,c,d,e,f,g,h]
+    return x[sel[0]*4+sel[1]*2+sel[2]]
+
+
+def dmux4way(lin, sel):
+    """
+    2 bit selector can send input 1 of 4 ways.
+    00,01,10,11 = a,b,c,d
+    sel[0] x 2**0 + sel[1] x 2**1 = index, 0,1,2,3 = 00,01,10,11
+    The number system right to left.
+    """
+    z = [0] * 4
+    path = sel[0]*2 + sel[1]
+    return [lin if i == path else z for i in range(4)]
+
+def dmux8way(lin, sel):
+    """
+    3 bit selector. sent 1 of 8 ways.
+    """
+    z = [0] * 8
+    path = sel[0]*4 + sel[1]*2 + sel[2]
+    return [lin if i == path else z for i in range(8)]
+
+
 if __name__ == "__main__":
+    """
+    testing is by no means exhaustive
+    """
+
+    m = [1,0,1,0,1,1,0,0,1,0,1,0,1,1,0,0] #random 16 bit array
+    n = [1,0,1,0,1,1,0,0,1,0.0,1,0,1,1,0,0]
+    print("checking 16 bit checker ")
+    if (check_16bit(m) == True and check_16bit(n) == False): print("passed")
+    else: print("Failed")
+
     cases = [[0,0],[0,1],[1,0],[1,1]]
 
-    nand_answers = [1,1,1,0]    
+    nand_answers = [1,1,1,0]
     print("testing nand")
     for i, case in enumerate(cases):
         if (nand(case[0],case[1]) == nand_answers[i]): print(f"{case[0]},{case[1]} Passed")
         else: print(f"{case[0]},{case[1]} Failed, output {nand(case[0],case[1])}")
 
-    xor_answers = [0,1,1,0]    
+    xor_answers = [0,1,1,0]
     print("testing xor")
     for i, case in enumerate(cases):
         if (xor(case[0],case[1]) == xor_answers[i]): print(f"{case[0]},{case[1]} Passed")
@@ -83,6 +205,39 @@ if __name__ == "__main__":
         if (list(dmux(a, s)) == dmux_answers[s]): print(f"{s} Passed")
         else: print(f"{s} Failed, output {dmux(a, s)} ")
 
-    
-    
-    
+
+    print("testing multi functions")
+
+    if (multilnot(m) != [0,1,0,1,0,0,1,1,0,1,0,1,0,0,1,1]): print("multilnot failed")
+    else: print("multilnot passed")
+
+    if (multiland(m, m) != m): print("multiland failed")
+    else: print("multiland passed")
+
+    flipm = [1 - m[i] for i in m]
+    if (multilor(m, m) == flipm): print("multilor failed")
+    else: print("multilor passed")
+
+
+    if multimux(m, flipm, 1) == m: print("multimux failed")
+    if multimux(m, flipm, 1) == flipm: print("multimux passed")
+
+    print("testing multiway functions")
+    meight = [0,1,0,1,0,0,1,1]
+    mone = [1,1,1,1,1,1,1,1]
+    mz = [0,0,0,0,0,0,0,0]
+
+    if (mwaylor(meight) == 1): print("mwaylor passed")
+    else: print("mwaylor Failed")
+
+    sel2 = [0,1]
+    sel3 = [0,1,0]
+
+    if (mux8way16(a,a,a,a,a,a,a,a,sel3) == a): print("mux8way16 passed")
+    else: print("mux8way16 failed")
+
+    if (dmux4way(a, sel2)[1] == a): print("dmux4way passed")
+    else: print("dmux4wayfailed")
+
+    if (dmux8way(a, sel3)[2] == a): print("dmux8way passed")
+    else: print("dmux8way failed")

@@ -16,7 +16,7 @@ Each level is planned to be an abstraction that relies on parts/objects from the
 
 
 
-# CookieCutter.. 
+# CookieCutter..
 
 ![PyPI version](https://img.shields.io/pypi/v/nand2tetris.svg)
 
@@ -70,6 +70,7 @@ just qa
 
 ## Author
 
-nand2tetris was created in 2026 by Thomas Binnie.
+This nand2tetris repository was created in 2026 by Thomas Binnie.
+The original nand2tetris can be found at https://www.nand2tetris.org
 
 Built with [Cookiecutter](https://github.com/cookiecutter/cookiecutter) and the [audreyfeldroy/cookiecutter-pypackage](https://github.com/audreyfeldroy/cookiecutter-pypackage) project template.
