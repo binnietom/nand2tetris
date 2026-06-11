@@ -9,7 +9,7 @@ Nand is the lowest abstraction in nand to tetris - Takes two binary inputs and r
 An abastraction is logical behaviour without explanation.
 We express binary in 0,1 (rather than True False).
 
-Nand are the fundamental gates. You buy these and use a soldering gun to make nand, xor etc.
+Nand are the fundamental gates. You buy these and use a soldering gun to make and, or, xor, multiplexers etc.
 
 
 Added the letter l where python has a predefind word for the gate name.
@@ -39,6 +39,24 @@ def nand(a,b):
     if (a == 1 and b == 1): return 0
     return 1
 
+def andnand(a,b):
+    """
+    and from nands
+    """
+    return nand(nand(a,b), nand(a,b))
+
+def ornand(a,b):
+    """
+    or from nands
+    """
+    return nand(nand(a,a), nand(b,b))
+
+def notnand(a):
+    """
+    not from nands
+    """
+    return nand(a,a)
+
 def land(a,b):
     if (a == b and a == 1): return 1
     return 0
@@ -57,6 +75,12 @@ def xor(a,b):
     """
     return lor(land(a, lnot(b)),land(lnot(a), b))
 
+def xornand(a,b):
+    """
+    not or, can also be written if a!=b return 1 else 0.
+    """
+    return ornand(andnand(a, notnand(b)),andnand(notnand(a), b))
+
 def mux(a,b,sel):
     """
     Short for multiplexer.
@@ -65,6 +89,9 @@ def mux(a,b,sel):
     if sel == 0: return a
     return b
 
+def muxnand(a,b,sel):
+    return ornand(andnand(a, notnand(sel)),andnand(b, sel))
+
 def dmux(a,sel):
     """
     Demulitplexer. returns 2 bits a and 0. The order is determined by sel.
@@ -72,7 +99,7 @@ def dmux(a,sel):
     if sel == 0: return a, 0
     return 0, a
 
-##tested up to here.
+
 
 def multilnot(lin):
     """
@@ -189,6 +216,11 @@ if __name__ == "__main__":
     for i, case in enumerate(cases):
         if (xor(case[0],case[1]) == xor_answers[i]): print(f"{case[0]},{case[1]} Passed")
         else: print(f"{case[0]},{case[1]} Failed")
+
+    print("testing xor nand")
+    for i, case in enumerate(cases):
+        if (xornand(case[0],case[1]) == xor_answers[i]): print(f"{case[0]},{case[1]} Passed")
+        else: print(f"{case[0]},{case[1]} Failed, output {xornand(case[0],case[1])} should be {xor(case[0],case[1])}" )
 
     mux_answers = [0,0,1,1,0,1,0,1]
     sel = [0,1]
