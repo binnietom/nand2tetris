@@ -14,6 +14,8 @@ Nand are the fundamental gates. You buy these and use a soldering gun to make an
 Added the letter l where python has a predefind word for the gate name.
 
 My data is represented as an array of bits.
+
+These funciton are mainly for single bits. The multi* functions expand to look accross multi-bit numbers.
 """
 
 def check_bit(a):
@@ -100,8 +102,6 @@ def dmux(a,sel):
     """
     if sel == 0: return a, 0
     return 0, a
-
-
 
 def multilnot(lin):
     """
