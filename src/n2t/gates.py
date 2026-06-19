@@ -14,6 +14,7 @@ Nand are the fundamental gates. You buy these and use a soldering gun to make an
 
 Added the letter l where python has a predefind word for the gate name.
 
+My data is represented as an array of bits. 
 """
 
 def check_bit(a):
