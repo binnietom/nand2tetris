@@ -11,10 +11,9 @@ We express binary in 0,1 (rather than True False).
 
 Nand are the fundamental gates. You buy these and use a soldering gun to make and, or, xor, multiplexers etc.
 
-
 Added the letter l where python has a predefind word for the gate name.
 
-My data is represented as an array of bits. 
+My data is represented as an array of bits.
 """
 
 def check_bit(a):
@@ -49,6 +48,7 @@ def andnand(a,b):
 def ornand(a,b):
     """
     or from nands
+    Notice that or is and or, xor is just or.
     """
     return nand(nand(a,a), nand(b,b))
 
@@ -79,6 +79,7 @@ def xor(a,b):
 def xornand(a,b):
     """
     not or, can also be written if a!=b return 1 else 0.
+    Notice that or is and or, xor is just or.
     """
     return ornand(andnand(a, notnand(b)),andnand(notnand(a), b))
 
