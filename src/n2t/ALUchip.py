@@ -102,7 +102,6 @@ def adder(a,b):
     uses the fulladder becuase 3 bits are required (2 that are being added and the carry from the last column).
     going bitwise is sufficiently fast to be completed 16 times in 1 clock cycle.
     """
-
     #if check_16bit(a) and check_16bit(b):
     out = []
     carry = 0
