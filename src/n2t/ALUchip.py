@@ -57,10 +57,10 @@ def adder(a,b):
     """
     if check_16bit(a) and check_16bit(b):
         out = []
-        overflow = 0
-        for bi, ai in zip(reversed(a), reversed(b):
-            overflow, bit = fulladder(overflow, ai, bi)
-            out.append(bit)
+        carry = 0
+        for ai, bi in zip(reversed(a), reversed(b)):
+            carry, sum = fulladder(ai, bi, carry)
+            out.append(sum)
     return reversed(out)
 
 def incrementor(a):
@@ -83,7 +83,7 @@ def hack(zx, nx, zy, ny, f, no, x, y):
 
     so possible function outputs are 0, 1, -1, x, y, !x, !y, -x, -y, x+1, y+1, x-1, y-1, x+y, x-y, y-x, x&y, x|y.
     """
-    
+
 
 
 
