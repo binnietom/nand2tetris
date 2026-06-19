@@ -19,7 +19,7 @@ These & more complex functions will be handled at the OS level.
 
 """
 
-from gates import andnand, ornand, notnand, xornand, muxnand
+from gates import andnand, ornand, notnand, xornand, muxnand, check_16bit
 
 def halfadder(a,b):
     """
@@ -47,7 +47,7 @@ def fulladder(a,b,c):
     carry2, sum2 = halfadder(sum1, a)
     return ornand(carry1, carry2), sum2
 
-def adder():
+def adder(a,b):
     """
     can add 2 n-bit numebers (we'll use 16 bit)
     (referred to as add16 in the book in some places).
@@ -55,13 +55,19 @@ def adder():
     uses the fulladder becuase 3 bits are required (2 that are being added and the carry from the last column).
     going bitwise is sufficiently fast to be completed 16 times in 1 clock cycle.
     """
+    if check_16bit(a) and check_16bit(b):
+        out = []
+        overflow = 0
+        for bi, ai in zip(reversed(a), reversed(b):
+            overflow, bit = fulladder(overflow, ai, bi)
+            out.append(bit)
+    return reversed(out)
 
-
-
-def incrementor():
+def incrementor(a):
     """
     Adds 1 to a given numbers. Ignores the overflow bit.
     """
+    return adder(1,a)
 
 def hack(zx, nx, zy, ny, f, no, x, y):
     """
@@ -77,7 +83,7 @@ def hack(zx, nx, zy, ny, f, no, x, y):
 
     so possible function outputs are 0, 1, -1, x, y, !x, !y, -x, -y, x+1, y+1, x-1, y-1, x+y, x-y, y-x, x&y, x|y.
     """
-
+    
 
 
 
