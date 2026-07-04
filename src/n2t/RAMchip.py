@@ -15,43 +15,70 @@ Within a cycle, nothing changes. Changes only occur between cycles.
 Clock length must be longer than current flow changes in the circuits.
 
 We must build functions that can handle time states as booleans.
+#its not actually time its iterations of the cycle.
 """
 
 import time
+
+class clock:
+    def __init__(self, t=0):
+        self.t = 0
+    def iter(self):
+        """
+        Clock as an iterator object.
+        Call it to change from tock to tick.
+        """
+        self.t += 1
+        return self.t
+    def label(self):
+        return self.t
+
+cpu_clock = clock()
+
+def call_clock():
+
 
 def bit_time(a):
     """
     converts a bit or bit array to object + timestamp
     """
-    t = 0 #probably needs to read a value to assign?
-    return [a,t]
+    t = cpu_clock.label()
+    c = [a,t]
+    return c
 
-
-def clock_wait(t):
-    """
-    Clock built with a variable wait between tocks and ticks.
-    """
-    t = t/10**6 #t in micro s
-
-    time.sleep(t)
-
-
-def clock_iter():
-    """
-    Clock as an iterator object.
-    Call it to change from tock to tick.
-    """
-
-def dff(a):
+def dff(c):
     """
     Data Flip Flop
     In bit a(t) = out(t+1)
+    c is [a, t] like in bit_time.
+    """
+    #cpu_clock.iter()
+    #c[1] = cpu_clock.label()  ####will this iterate the clock every dff call? maybe...
+    return [c[0], c[1]+1]
+
+def reg():
+    """
+    Single bit register, based on DFFs.
+    """
+
+def reg16():
+    """
+    multi bit register, based on reg().
+    """
+
+
+
+def RAM():
+    """
+    Based on registers.
+    """
+
+def counter():
+    """
+    Based on registers.
     """
 
 def address():
-
-def register():
-
-def RAM():
-
-def counter():
+    """
+    ?
+    """
