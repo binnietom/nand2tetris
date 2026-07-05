@@ -146,7 +146,6 @@ def mwaylor(ina):
     Multi-way Or gate
     outputs 1 when at least 1 of the inputs is 1, 0 otherwise.
     #hardware typically needs 1 8mwaylor variant. We can leave it undetermined in python.
-
     """
     for i in ina:
         if i == 1:
@@ -198,9 +197,8 @@ if __name__ == "__main__":
     """
     testing is by no means exhaustive
     """
-
     m = [1,0,1,0,1,1,0,0,1,0,1,0,1,1,0,0] #random 16 bit array
-    n = [1,0,1,0,1,1,0,0,1,0.0,1,0,1,1,0,0]
+    n = [1,0,1,0,1,1,0,0,1,0.0,1,0,1,1,0,0] #(checking false for 17bit != 16 bits)
     print("checking 16 bit checker ")
     if (check_16bit(m) == True and check_16bit(n) == False): print("passed")
     else: print("Failed")

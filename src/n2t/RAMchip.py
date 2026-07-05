@@ -16,29 +16,68 @@ Clock length must be longer than current flow changes in the circuits.
 
 We must build functions that can handle time states as booleans.
 #its not actually time its iterations of the cycle.
+
+In a real CPU the clock isn't build from nands. Current is measured from a quartz crystalline clock or modern ones use a small cpu chip.
 """
 
-from gates import notnand, muxnand
+from gates import notnand, muxnand, check_16bit, mux8way16
+import time, threading
 
 class clock:
     """
     Clock as a custom iterator object.
     """
     def __init__(self, t=0):
-        self.t = 0
-    def iter(self):
+        self.t = t
+        self.run = False
+        self._thread = None
+        self.cycle = 1
+
+    def tick(self):
         """
         Call it to progress the cycle.
         """
         self.t += 1
-        return self.t
+
     def label(self):
         """
         Call to label bits.
         """
         return self.t
 
-cpu_clock = clock()
+    def update_cycle(self, cycle = 10**6):
+        """
+        default cycle is 1s, update it to microsecond value here.
+        """
+        self.cycle = cycle/10**6
+
+    def auto_iter(self):
+        """
+        run the clock automatically, for t micro-seconds (default 1s).
+        """
+        while self.run:
+            time.sleep(self.cycle)
+            self.t += 1
+
+    def start(self):
+        """
+        Start running the clock automatically in the background
+        """
+        if self.run:
+            return
+
+        self.run = True
+        self._thread = threading.Thread(
+            target=self.auto_iter,
+            daemon=True
+        )
+        self._thread.start()
+
+    def stop(self):
+        """
+        stops auto_iter
+        """
+        self.run = False
 
 def bit_time(a):
     """
@@ -48,41 +87,55 @@ def bit_time(a):
     c = [a,t]
     return c
 
-def dff(c):
+def dff(a):
     """
     Data Flip Flop
     In bit a(t) = out(t+1)
     c is [a, t] like in bit_time.
     """
-    #cpu_clock.iter()
-    #c[1] = cpu_clock.label()  ####will this iterate the clock every dff call? maybe...
-    return [c[0], c[1]+1]
+    c = bit_time(a)
+    c[1] += 1
+    return c
 
-def reg(in, load=0):
+def reg(input, load=0):
     """
     Single bit register, based on DFFs.
     In state is the out state unless there is an input load.
     """
-    return muxnand(in, notnand(in), load)
+    return muxnand(input, notnand(input), load)
 
-def reg16():
+def reg16(input, load=0):
     """
-    multi bit register, based on reg().
+    multi bit register, based on reg(). 16  bit, is organised in arrays so its the same here(?).
     """
+    if check_16bit(input) == True:
+        return reg(input, load)
 
-
-
-def RAM():
+def RAM(input, address, current=None,  size = 16):
     """
-    Based on registers.
+    Based on registers. We have (size =) 16 registers.
+    Address assigns which register to input information to.
+
+    If the architecture is known (like in hardware) you can construct the address IDs using a combination of eg. mux8way16 and mux4way16.
     """
+    if current == None:
+        storage = size*[[]]
+    assert len(current) == size
+    storage[address] = input
+    return storage
 
 def counter():
     """
     Based on registers.
     """
 
-def address():
+def running_RAM():
     """
-    ?
+    I need to update everything inbetween each clock cycle. (which can now run in the background.
     """
+
+cpu_clock = clock()
+cpu_clock.start()
+
+if __name__ == "__main__":
+    print("starting RAM tests")
