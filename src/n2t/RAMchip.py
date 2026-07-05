@@ -94,7 +94,9 @@ class clock:
         self.run = False
 
 c = clock()
+#c.update_cycle(cycle=0.000001) #Easy to speed it up here. 
 c.start()
+
 
 def check_clock(c=c):
     print("checking clock t_cycle=", c.label())
@@ -245,7 +247,6 @@ if __name__ == "__main__":
         for i in len(answers):
             print(f"{twoscomp(answers[i])} != {twoscomp(results[i])}")
 
-
     #RAM inputs are in bits
     print("testing RAM")
     RAM = RAM()
@@ -261,5 +262,6 @@ if __name__ == "__main__":
 
     if testint == twoscomp(readbit):
         print(f"Passed {testint} == {twoscomp(RAM.read(address = address))}")
+        print("RAM successfully stored and recalled a bit value within a clock cycle.")
     else:
         print("RAM error")
