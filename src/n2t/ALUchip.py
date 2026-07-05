@@ -58,16 +58,6 @@ def twoscomp(b):
         x += b[i] * 2**(n-i-1)
     return x
 
-def inttobit(x, n=16):
-    """
-    integer value to binary python array of length 16
-    """
-    #twoscomp part
-    if x < 0:
-        x += 2**n
-    #shift x by i bits (>>), bitwise and (&) with 1,
-    return [(x >> i) & 1 for i in range(n-1, -1, -1)]
-
 def halfadder(a,b):
     """
     adds 2 bit binary numbers
