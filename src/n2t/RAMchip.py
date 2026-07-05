@@ -18,25 +18,27 @@ We must build functions that can handle time states as booleans.
 #its not actually time its iterations of the cycle.
 """
 
-import time
+from gates import notnand, muxnand
 
 class clock:
+    """
+    Clock as a custom iterator object.
+    """
     def __init__(self, t=0):
         self.t = 0
     def iter(self):
         """
-        Clock as an iterator object.
-        Call it to change from tock to tick.
+        Call it to progress the cycle.
         """
         self.t += 1
         return self.t
     def label(self):
+        """
+        Call to label bits.
+        """
         return self.t
 
 cpu_clock = clock()
-
-def call_clock():
-
 
 def bit_time(a):
     """
@@ -56,10 +58,12 @@ def dff(c):
     #c[1] = cpu_clock.label()  ####will this iterate the clock every dff call? maybe...
     return [c[0], c[1]+1]
 
-def reg():
+def reg(in, load=0):
     """
     Single bit register, based on DFFs.
+    In state is the out state unless there is an input load.
     """
+    return muxnand(in, notnand(in), load)
 
 def reg16():
     """
