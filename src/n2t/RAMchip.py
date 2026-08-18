@@ -38,7 +38,7 @@ class clock:
         self.t = t
         self.run = False
         self._thread = None
-        self.cycle = 1
+        self.cycle = 0.01
 
     def tick(self):
         """
@@ -94,7 +94,7 @@ class clock:
         self.run = False
 
 c = clock()
-#c.update_cycle(cycle=0.000001) #Easy to speed it up here. 
+#c.update_cycle(cycle=0.000001) #Easy to speed it up here.
 c.start()
 
 
